@@ -6,7 +6,8 @@ Birthday::Birthday(int samples=1000) {
 
 bool Birthday::hasDuplicates(std::vector<int> & birthdays) {
     std::sort(birthdays.begin(), birthdays.end());
-    for(unsigned int i=1; i < birthdays.size(); i++) {
+    int size = birthdays.size();
+    for(unsigned int i{1}; i < size; i++) {
         if(birthdays.at(i) == birthdays.at(i-1)) 
             return true;
     }
@@ -23,4 +24,3 @@ std::vector<int> Birthday::generateNumbers(int size) {
     } 
     return list;
 }
- 
