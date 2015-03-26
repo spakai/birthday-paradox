@@ -29,3 +29,13 @@ TEST(BirthdayTest, MaxNoDoesNotExceed365) {
     auto it = std::max_element(list.begin(), list.end());
     ASSERT_THAT(*it, Lt(366)); 
 }
+
+TEST(BirthdayTest, AreTheNumbersReallyRandom) {
+    Birthday birthday(0);
+    auto list1 = birthday.generateNumbers(20);
+    auto list2 = birthday.generateNumbers(20);
+    int sum1 = std::accumulate(list1.begin(),list1.end(), 0);
+    int sum2 = std::accumulate(list2.begin(),list2.end(), 0);
+    ASSERT_FALSE(sum1==sum2);
+
+}
