@@ -17,7 +17,8 @@ bool Birthday::hasDuplicates(std::vector<int> & birthdays) {
 
 std::vector<int> Birthday::generateNumbers(int size) {
     std::vector<int> list;
-    std::default_random_engine dre;
+    std::random_device rd;
+    std::default_random_engine dre(rd());
     std::uniform_int_distribution<int> di(0,365);
     for(int i{0}; i < size ; i++) {
         list.push_back(di(dre));
