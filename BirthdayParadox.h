@@ -2,9 +2,9 @@
 #include <random>
 #include <vector>
 
-class Birthday {
+class BirthdayParadox {
     public:
-        Birthday(int samples);
+        BirthdayParadox(int samples);
         bool hasDuplicates(std::vector<int> & birthdays);
         std::vector<int> generateNumbers(int size);
         int simulate(int size);

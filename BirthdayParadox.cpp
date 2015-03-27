@@ -1,10 +1,10 @@
-#include "Birthday.h"
+#include "BirthdayParadox.h"
 
-Birthday::Birthday(int samples=1000) {
+BirthdayParadox::BirthdayParadox(int samples=1000) {
     this->samples = samples;
 }
 
-bool Birthday::hasDuplicates(std::vector<int> & birthdays) {
+bool BirthdayParadox::hasDuplicates(std::vector<int> & birthdays) {
     std::sort(birthdays.begin(), birthdays.end());
     unsigned int size = birthdays.size();
     for(unsigned int i{1}; i < size; i++) {
@@ -15,7 +15,7 @@ bool Birthday::hasDuplicates(std::vector<int> & birthdays) {
     return false;
 }
 
-std::vector<int> Birthday::generateNumbers(int size) {
+std::vector<int> BirthdayParadox::generateNumbers(int size) {
     std::vector<int> list;
     std::random_device rd;
     std::default_random_engine dre(rd());
@@ -26,7 +26,7 @@ std::vector<int> Birthday::generateNumbers(int size) {
     return list;
 }
 
-int Birthday::simulate(int size) {
+int BirthdayParadox::simulate(int size) {
     int dup{0};
     for(int i{0}; i < samples ; i++) {
         auto list = generateNumbers(size);
