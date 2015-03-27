@@ -25,3 +25,14 @@ std::vector<int> Birthday::generateNumbers(int size) {
     } 
     return list;
 }
+
+int Birthday::simulate(int size) {
+    int dup{0};
+    for(int i{0}; i < samples ; i++) {
+        auto list = generateNumbers(size);
+        if(hasDuplicates(list)) { 
+            ++dup; 
+        }
+    } 
+    return dup;
+}

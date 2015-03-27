@@ -36,3 +36,8 @@ TEST(BirthdayTest, AreTheNumbersReallyRandom) {
     auto list2 = birthday.generateNumbers(20);
     ASSERT_THAT(list1 == list2, Eq(0));
 }
+
+TEST(BirthdayTest, Simulate) {
+    Birthday birthday(1000);
+    ASSERT_THAT(birthday.simulate(23),Gt(490));
+}
