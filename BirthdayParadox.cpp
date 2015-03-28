@@ -1,7 +1,8 @@
 #include "BirthdayParadox.h"
 
-BirthdayParadox::BirthdayParadox(int samples=1000) {
+BirthdayParadox::BirthdayParadox(int samples=1000, std::vector<int> sizes={}) {
     this->samples = samples;
+    this->sizes = sizes;
 }
 
 bool BirthdayParadox::hasDuplicates(std::vector<int> & birthdays) {
@@ -26,13 +27,16 @@ std::vector<int> BirthdayParadox::generateNumbers(int size) {
     return list;
 }
 
-int BirthdayParadox::simulate(int size) {
-    int dup{0};
-    for(int i{0}; i < samples ; i++) {
-        auto list = generateNumbers(size);
-        if(hasDuplicates(list)) { 
-            ++dup; 
+std::map<int, int>  BirthdayParadox::simulate() {
+    std::map<int, int> results;
+    for(auto it=sizes.begin(); it!=sizes.end(); ++it) {
+        int dup{0};
+        for(int i{0}; i < samples ; i++) {
+            auto list = generateNumbers(*it);
+            if(hasDuplicates(list)) ++dup; 
         }
+        
+        results.emplace(*it,dup);
     } 
-    return dup;
+    return results;
 }
