@@ -6,3 +6,5 @@ By the pigeonhole principle, the probability reaches 100% when the number of peo
 (since there are 366 possible birthdays, including February 29). However, 99.9% probability is reached with 
 just 70 people, and 50% probability with 23 people.
 
+While studying Think Python - an excellent book by Allen B. Downey , I came across this problem in one of the exercises. 
+I thought it will be a good reason to learn up gnuplot and threadpools.
