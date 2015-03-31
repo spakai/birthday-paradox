@@ -20,10 +20,11 @@ class Work{
             : id(id)
             , executeFunction([]{})
         {}
-        Work(int id, std::function<void()> executeFunction)
+        Work(std::function<void()> executeFunction, int id=0)
             : id(id)
             , executeFunction(executeFunction)
         {} 
 
-        int getId() const; 
+        int getId() const;
+        void execute(); 
 };
