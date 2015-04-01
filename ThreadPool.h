@@ -20,4 +20,5 @@ class ThreadPool {
     public:
         void add(Work work);
         bool hasWork();
+        Work pull();
 };

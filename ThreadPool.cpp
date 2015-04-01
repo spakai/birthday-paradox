@@ -7,3 +7,9 @@ void ThreadPool::add(Work work) {
 bool ThreadPool::hasWork() {
     return !workQueue.empty();
 }
+
+Work ThreadPool::pull() {
+    auto work = workQueue.back();
+    workQueue.pop_back();
+    return work;
+}
