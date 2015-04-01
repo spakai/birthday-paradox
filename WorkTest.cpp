@@ -21,3 +21,12 @@ TEST(WorkTest,ExecuteAFunction) {
     work.execute();
     ASSERT_THAT(a,1);
 }
+
+TEST(WorkTest, CallBackFunction) {
+    std::vector<int> result; 
+    auto callback =  [&] (int a) { result.push_back(a); };
+    auto lambdaf = [&] () { callback(2); };
+    Work work(lambdaf);
+    work.execute();
+    ASSERT_THAT(result, ElementsAre(2));
+}
