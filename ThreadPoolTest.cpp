@@ -30,3 +30,20 @@ TEST(ThreadPoolTest,WorkGetsPulledInSequence) {
     auto work2 = pool.pull();
     ASSERT_THAT(work2.getId(), 2); 
 }
+
+TEST(ThreadPoolTest,HasNoWorkAfterLastWorkIsPulled) {
+    ThreadPool pool;
+    pool.add(Work{});
+    pool.add(Work{});
+    auto work1 = pool.pull();
+    auto work2 = pool.pull();
+    ASSERT_THAT(pool.hasWork(), Eq(0));
+}
+
+TEST(ThreadPoolTest,HasWorkAfterOneWorkIsPulled) {
+    ThreadPool pool;
+    pool.add(Work{});
+    pool.add(Work{});
+    auto work1 = pool.pull();
+    ASSERT_THAT(pool.hasWork(), Eq(1));
+}
