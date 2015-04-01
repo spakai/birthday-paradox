@@ -10,14 +10,19 @@
 #pragma once
 
 #include <deque>
-
+#include <thread>
+#include <memory>
 #include "Work.h"
 
 class ThreadPool {
     private:
         std::deque<Work> workQueue;
-
+        std::shared_ptr<std::thread> workThread;
+    
     public:
+        ~ThreadPool();
+        void start();
+        void worker();
         void add(Work work);
         bool hasWork();
         Work pull();
