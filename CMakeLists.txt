@@ -10,11 +10,13 @@ set(CMAKE_CXX_FLAGS "${CMAXE_CXX_FLAGS} -Wall -g -O0 --coverage")
 set(sources 
    main.cpp
    BirthdayParadox.cpp
-   Work.cpp)
+   Work.cpp 
+   ThreadPool.cpp)
 
 set(test_sources
    BirthdayParadoxTest.cpp
-   WorkTest.cpp)
+   WorkTest.cpp
+   ThreadPoolTest.cpp)
 
 add_executable(test ${test_sources} ${sources})
 
