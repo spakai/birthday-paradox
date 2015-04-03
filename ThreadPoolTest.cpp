@@ -1,4 +1,7 @@
 #include "gmock/gmock.h" 
+#include <chrono>
+#include <condition_variable>
+#include <mutex>
 
 #include "ThreadPool.h"
 
@@ -46,4 +49,22 @@ TEST(ThreadPoolTest,HasWorkAfterOneWorkIsPulled) {
     pool.add(Work{});
     auto work1 = pool.pull();
     ASSERT_THAT(pool.hasWork(), Eq(1));
+}
+
+TEST(ThreadPoolTest, PullsWorkInAThread) {
+    ThreadPool pool; 
+    pool.start();
+    std::condition_variable wasExecuted;
+    bool wasWorked{0};
+    std::mutex m;
+    Work work{[&] {
+        std::unique_lock<std::mutex> lock(m);
+        wasWorked = true;
+        wasExecuted.notify_all();
+    }};
+
+    pool.add(work);
+    std::unique_lock<std::mutex> lock(m);
+ 
+    ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(100), [&] { return wasWorked; }), Eq(true));      
 }

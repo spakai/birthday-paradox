@@ -9,7 +9,6 @@ void ThreadPool::worker() {
     while (!hasWork())
         ;
     pull().execute(); 
-
 }
 
 void ThreadPool::add(Work work) {
