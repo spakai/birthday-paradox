@@ -12,13 +12,15 @@
 #include <deque>
 #include <thread>
 #include <memory>
+#include <atomic>
+
 #include "Work.h"
 
 class ThreadPool {
     private:
         std::deque<Work> workQueue;
         std::shared_ptr<std::thread> workThread;
-    
+        std::atomic<bool> done {false};    
     public:
         ~ThreadPool();
         void start();

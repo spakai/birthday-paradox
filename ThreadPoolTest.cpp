@@ -65,6 +65,25 @@ TEST(ThreadPoolTest, PullsWorkInAThread) {
 
     pool.add(work);
     std::unique_lock<std::mutex> lock(m);
- 
     ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(100), [&] { return wasWorked; }), Eq(true));      
+}
+
+TEST(ThreadPoolTest, ExecutesMultipleWork) {
+    ThreadPool pool; 
+    pool.start();
+    std::condition_variable wasExecuted;
+    std::mutex m;
+    unsigned int count{0};
+    unsigned int NumberOfWorkItems{3};
+    Work work{[&] {
+        std::unique_lock<std::mutex> lock(m);
+        ++count;
+        wasExecuted.notify_all();
+    }};
+    for(unsigned int i{0}; i < NumberOfWorkItems ; i++) {
+        pool.add(work);
+    } 
+
+    std::unique_lock<std::mutex> lock(m);
+    ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(100), [&] { return count == NumberOfWorkItems; }), Eq(true));      
 }

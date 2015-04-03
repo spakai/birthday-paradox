@@ -6,9 +6,12 @@ void ThreadPool::start() {
 }
 
 void ThreadPool::worker() {
-    while (!hasWork())
-        ;
-    pull().execute(); 
+    while (!done) {
+        while (!done && !hasWork())
+            ;
+        if(done) break;
+        pull().execute(); 
+    }
 }
 
 void ThreadPool::add(Work work) {
@@ -25,6 +28,7 @@ Work ThreadPool::pull() {
     return work;
 }
 
-ThreadPool::~ThreadPool() { 
+ThreadPool::~ThreadPool() {
+    done = true; 
     if(workThread) workThread->join();
 }
