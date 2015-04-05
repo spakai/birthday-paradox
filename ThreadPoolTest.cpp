@@ -86,3 +86,24 @@ TEST_F(ThreadPoolTest, ExecutesMultipleWork) {
     std::unique_lock<std::mutex> lock(m);
     ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(100), [&] { return count == NumberOfWorkItems; }), Eq(true));      
 }
+
+TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
+    pool.start();
+    unsigned int NumberOfWorkItems{10};
+    unsigned int NumberOfThreads{10};
+    Work work{[&] {
+        incrementCountAndNotify();
+    }};
+
+    std::vector<std::shared_ptr<std::thread>> threads; 
+    for(unsigned int i{0}; i < NumberOfThreads; i++) {
+        threads.push_back(std::make_shared<std::thread>([&] { 
+            for(unsigned int j{0}; j < NumberOfWorkItems; j++) 
+                pool.add(work); 
+        })); 
+    }
+    std::unique_lock<std::mutex> lock(m);
+    ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(100), [&] { return count == NumberOfWorkItems*NumberOfThreads; }), Eq(true));   
+    for(auto & thread : threads) thread->join();
+}
+

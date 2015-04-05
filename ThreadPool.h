@@ -13,7 +13,7 @@
 #include <thread>
 #include <memory>
 #include <atomic>
-
+#include <mutex>
 #include "Work.h"
 
 class ThreadPool {
@@ -21,6 +21,7 @@ class ThreadPool {
         std::deque<Work> workQueue;
         std::shared_ptr<std::thread> workThread;
         std::atomic<bool> done {false};    
+        std::mutex m ;
     public:
         ~ThreadPool();
         void start();

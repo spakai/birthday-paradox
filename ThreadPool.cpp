@@ -15,14 +15,17 @@ void ThreadPool::worker() {
 }
 
 void ThreadPool::add(Work work) {
+    std::lock_guard<std::mutex> guard(m); 
     workQueue.push_front(work);
 }
 
 bool ThreadPool::hasWork() {
+    std::lock_guard<std::mutex> guard(m); 
     return !workQueue.empty();
 }
 
 Work ThreadPool::pull() {
+    std::lock_guard<std::mutex> guard(m); 
     auto work = workQueue.back();
     workQueue.pop_back();
     return work;
