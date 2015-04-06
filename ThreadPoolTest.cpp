@@ -12,12 +12,24 @@ class ThreadPoolTest : public Test {
         ThreadPool pool;
         std::condition_variable wasExecuted;
         std::mutex m;
+        std::vector<std::shared_ptr<std::thread>> threads; 
+ 
         unsigned int count{0};
  
         void incrementCountAndNotify() {
             std::unique_lock<std::mutex> lock(m);
             ++count;
             wasExecuted.notify_all();
+        }
+       
+        void waitForNotifactionOrFailOnTimeout(unsigned expectedCount, int milliseconds=100) {
+            std::unique_lock<std::mutex> lock(m);
+            ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(milliseconds), [&] { return count == expectedCount; }), Eq(true));      
+ 
+        } 
+
+        void TearDown() override {
+            for (auto& t: threads) t->join();
         }
 };
 
@@ -83,8 +95,7 @@ TEST_F(ThreadPoolTest, ExecutesMultipleWork) {
         pool.add(work);
     } 
 
-    std::unique_lock<std::mutex> lock(m);
-    ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(100), [&] { return count == NumberOfWorkItems; }), Eq(true));      
+    waitForNotifactionOrFailOnTimeout(NumberOfWorkItems);
 }
 
 TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
@@ -95,15 +106,14 @@ TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
         incrementCountAndNotify();
     }};
 
-    std::vector<std::shared_ptr<std::thread>> threads; 
     for(unsigned int i{0}; i < NumberOfThreads; i++) {
         threads.push_back(std::make_shared<std::thread>([&] { 
             for(unsigned int j{0}; j < NumberOfWorkItems; j++) 
                 pool.add(work); 
         })); 
     }
-    std::unique_lock<std::mutex> lock(m);
-    ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(100), [&] { return count == NumberOfWorkItems*NumberOfThreads; }), Eq(true));   
-    for(auto & thread : threads) thread->join();
+
+    waitForNotifactionOrFailOnTimeout(NumberOfThreads * NumberOfWorkItems);
+
 }
 
