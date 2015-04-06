@@ -22,7 +22,7 @@ class ThreadPoolTest : public Test {
             wasExecuted.notify_all();
         }
        
-        void waitForNotifactionOrFailOnTimeout(unsigned expectedCount, int milliseconds=100) {
+        void waitForNotificationOrFailOnTimeout(unsigned expectedCount, int milliseconds=100) {
             std::unique_lock<std::mutex> lock(m);
             ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(milliseconds), [&] { return count == expectedCount; }), Eq(true));      
  
@@ -95,7 +95,7 @@ TEST_F(ThreadPoolTest, ExecutesMultipleWork) {
         pool.add(work);
     } 
 
-    waitForNotifactionOrFailOnTimeout(NumberOfWorkItems);
+    waitForNotificationOrFailOnTimeout(NumberOfWorkItems);
 }
 
 TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
@@ -113,7 +113,7 @@ TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
         })); 
     }
 
-    waitForNotifactionOrFailOnTimeout(NumberOfThreads * NumberOfWorkItems);
+    waitForNotificationOrFailOnTimeout(NumberOfThreads * NumberOfWorkItems);
 
 }
 
