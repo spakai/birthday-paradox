@@ -1,8 +1,10 @@
 #include "ThreadPool.h"
 
-
 void ThreadPool::start() {
-    workThread = std::make_shared<std::thread>(&ThreadPool::worker, this);
+    unsigned int numberOfThreads= std::thread::hardware_concurrency();
+    for(unsigned int i{0}; i < numberOfThreads; i++) {
+        threads.push_back(std::make_shared<std::thread>(&ThreadPool::worker, this));
+    } 
 }
 
 void ThreadPool::worker() {
@@ -33,5 +35,7 @@ Work ThreadPool::pull() {
 
 ThreadPool::~ThreadPool() {
     done = true; 
-    if(workThread) workThread->join();
+    for(auto& t:threads) {
+        t->join();
+    }
 }

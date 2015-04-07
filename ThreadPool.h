@@ -14,14 +14,16 @@
 #include <memory>
 #include <atomic>
 #include <mutex>
+#include <vector>
+
 #include "Work.h"
 
 class ThreadPool {
     private:
         std::deque<Work> workQueue;
-        std::shared_ptr<std::thread> workThread;
         std::atomic<bool> done {false};    
-        std::mutex m ;
+        std::mutex m;
+        std::vector<std::shared_ptr<std::thread>> threads;
     public:
         ~ThreadPool();
         void start();
