@@ -28,6 +28,7 @@ bool ThreadPool::hasWork() {
 
 Work ThreadPool::pull() {
     std::lock_guard<std::mutex> guard(m); 
+    if(workQueue.empty()) return Work{};
     auto work = workQueue.back();
     workQueue.pop_back();
     return work;

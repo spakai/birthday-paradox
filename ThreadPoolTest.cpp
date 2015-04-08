@@ -2,6 +2,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
+#include <set>
 
 #include "ThreadPool.h"
 
@@ -115,5 +116,22 @@ TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
 
     waitForNotificationOrFailOnTimeout(NumberOfThreads * NumberOfWorkItems);
 
+}
+
+TEST_F(ThreadPoolTest, MakesSureAllThreadsWorkToRetrieveFromQueue) {
+
+    pool.start();
+    std::set<std::thread::id> threadIds;
+    Work work{[&] {
+        threadIds.insert(std::this_thread::get_id()); 
+        incrementCountAndNotify();
+    }};
+
+    unsigned int NumberOfWorkItems{500};
+    for(unsigned int j{0}; j < NumberOfWorkItems; j++) { 
+        pool.add(work); 
+    }
+    waitForNotificationOrFailOnTimeout(NumberOfWorkItems);
+    ASSERT_THAT(threadIds.size(),Eq(2));
 }
 
