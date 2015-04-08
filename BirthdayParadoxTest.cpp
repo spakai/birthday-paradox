@@ -38,11 +38,9 @@ TEST(BirthdayParadoxTest, AreTheNumbersReallyRandom) {
 }
 
 TEST(BirthdayParadoxTest, Simulate) {
-    BirthdayParadox birthday(10000,{10,23,30,40,50});
-    auto map = birthday.simulate();
-    for(auto it = map.begin(); it!=map.end();++it) {
-        std::cout << it->first << "," << it->second << std::endl;
-    } 
+    BirthdayParadox birthday(100,{10,23,30,40,50});
+    BirthdayParadoxListener *listener = new BirthdayParadoxListener();;
+    birthday.simulate(listener);
         
-    ASSERT_THAT(map.size(),Eq(5));
+    ASSERT_THAT(listener->getSize(),Eq(5));
 }

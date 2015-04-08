@@ -27,16 +27,14 @@ std::vector<int> BirthdayParadox::generateNumbers(int size) {
     return list;
 }
 
-std::map<int, int>  BirthdayParadox::simulate() {
-    std::map<int, int> results;
+void BirthdayParadox::simulate(BirthdayParadoxListener *listener) {
     for(auto it=sizes.begin(); it!=sizes.end(); ++it) {
         int dup{0};
         for(int i{0}; i < samples ; i++) {
             auto list = generateNumbers(*it);
             if(hasDuplicates(list)) ++dup; 
         }
-        
-        results.emplace(*it,dup);
+
+        listener->update(*it, dup); 
     } 
-    return results;
 }
