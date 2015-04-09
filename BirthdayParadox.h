@@ -4,6 +4,7 @@
 #include <random>
 #include <vector>
 #include <map>
+#include "Work.h"
 
 class BirthdayParadoxListener {
     public:

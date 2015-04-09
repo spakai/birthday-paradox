@@ -29,12 +29,17 @@ std::vector<int> BirthdayParadox::generateNumbers(int size) {
 
 void BirthdayParadox::simulate(BirthdayParadoxListener & listener) {
     for(auto it=sizes.begin(); it!=sizes.end(); ++it) {
-        int dup{0};
-        for(int i{0}; i < samples ; i++) {
-            auto list = generateNumbers(*it);
-            if(hasDuplicates(list)) ++dup; 
-        }
+        Work work {[&] {
+            int dup{0};
+            for(int i{0}; i < samples ; i++) {
+                auto list = generateNumbers(*it);
+                if(hasDuplicates(list)) ++dup; 
+            }
 
-        listener.update(*it, dup); 
+            listener.update(*it, dup); 
+        }};
+
+        work.execute();
+        
     } 
 }
