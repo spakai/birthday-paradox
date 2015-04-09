@@ -23,7 +23,7 @@ class BirthdayParadox {
         BirthdayParadox(int samples, std::vector<int> sizes);
         bool hasDuplicates(std::vector<int> & birthdays);
         std::vector<int> generateNumbers(int size);
-        void simulate(BirthdayParadoxListener *listener);
+        void simulate(BirthdayParadoxListener & listener);
     private:
         int samples;
         std::vector<int> sizes;

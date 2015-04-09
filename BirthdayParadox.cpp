@@ -27,7 +27,7 @@ std::vector<int> BirthdayParadox::generateNumbers(int size) {
     return list;
 }
 
-void BirthdayParadox::simulate(BirthdayParadoxListener *listener) {
+void BirthdayParadox::simulate(BirthdayParadoxListener & listener) {
     for(auto it=sizes.begin(); it!=sizes.end(); ++it) {
         int dup{0};
         for(int i{0}; i < samples ; i++) {
@@ -35,6 +35,6 @@ void BirthdayParadox::simulate(BirthdayParadoxListener *listener) {
             if(hasDuplicates(list)) ++dup; 
         }
 
-        listener->update(*it, dup); 
+        listener.update(*it, dup); 
     } 
 }
