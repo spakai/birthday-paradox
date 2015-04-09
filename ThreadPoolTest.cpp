@@ -119,7 +119,7 @@ TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
 }
 
 TEST_F(ThreadPoolTest, MakesSureAllThreadsWorkToRetrieveFromQueue) {
-
+    unsigned int NumberOfThreads=std::thread::hardware_concurrency();
     pool.start();
     std::set<std::thread::id> threadIds;
     Work work{[&] {
@@ -132,6 +132,7 @@ TEST_F(ThreadPoolTest, MakesSureAllThreadsWorkToRetrieveFromQueue) {
         pool.add(work); 
     }
     waitForNotificationOrFailOnTimeout(NumberOfWorkItems);
-    ASSERT_THAT(threadIds.size(),Eq(2));
+    ASSERT_THAT(threadIds.size(),Eq(NumberOfThreads));
+ 
 }
 
