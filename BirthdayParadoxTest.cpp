@@ -38,9 +38,14 @@ TEST(BirthdayParadoxTest, AreTheNumbersReallyRandom) {
 }
 
 TEST(BirthdayParadoxTest, Simulate) {
-    BirthdayParadox birthday(100,{10,23,30,40,50});
+    BirthdayParadox birthday(10,{10,23,30,40,50});
     BirthdayParadoxListener listener;
     birthday.simulate(listener);
+    for(int i=0; i< 100000;i++) {
+    for(int j=0; j< 10000;j++) {} 
+
+
+    }
         
     ASSERT_THAT(listener.getSize(),Eq(5));
 }

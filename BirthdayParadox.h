@@ -5,10 +5,16 @@
 #include <vector>
 #include <map>
 #include "Work.h"
+#include "ThreadPool.h"
 
-class BirthdayParadoxListener {
+class BaseListener {
     public:
-        void update(int id, int duplicates) {
+        virtual void update(int id, int duplicates)=0;
+};
+
+class BirthdayParadoxListener : public BaseListener {
+    public:
+        virtual void update(int id, int duplicates) {
             results.emplace(id,duplicates);            
         }
 
@@ -24,7 +30,7 @@ class BirthdayParadox {
         BirthdayParadox(int samples, std::vector<int> sizes);
         bool hasDuplicates(std::vector<int> & birthdays);
         std::vector<int> generateNumbers(int size);
-        void simulate(BirthdayParadoxListener & listener);
+        void simulate(BaseListener & listener);
     private:
         int samples;
         std::vector<int> sizes;
