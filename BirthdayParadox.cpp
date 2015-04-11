@@ -28,8 +28,6 @@ std::vector<int> BirthdayParadox::generateNumbers(int size) {
 }
 
 void BirthdayParadox::simulate(BaseListener & listener) {
-    ThreadPool pool;
-    pool.start();
     for(auto it=sizes.begin(); it!=sizes.end(); ++it) {
         Work work {[&] {
             int dup{0};
@@ -40,6 +38,7 @@ void BirthdayParadox::simulate(BaseListener & listener) {
 
             listener.update(*it, dup); 
         }};
-        pool.add(work);
+        //pool.add(work);
+        work.execute();
     } 
 }
