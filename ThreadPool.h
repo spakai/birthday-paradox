@@ -26,7 +26,7 @@ class ThreadPool {
         std::vector<std::shared_ptr<std::thread>> threads;
     public:
         ~ThreadPool();
-        void start();
+        void start(unsigned int numberOfThreads);
         void worker();
         void add(Work work);
         bool hasWork();

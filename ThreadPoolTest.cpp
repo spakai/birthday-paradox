@@ -73,7 +73,7 @@ TEST_F(ThreadPoolTest,HasWorkAfterOneWorkIsPulled) {
 }
 
 TEST_F(ThreadPoolTest, PullsWorkInAThread) {
-    pool.start();
+    pool.start(4);
     bool wasWorked{0};
     Work work{[&] {
         std::unique_lock<std::mutex> lock(m);
@@ -87,7 +87,7 @@ TEST_F(ThreadPoolTest, PullsWorkInAThread) {
 }
 
 TEST_F(ThreadPoolTest, ExecutesMultipleWork) {
-    pool.start();
+    pool.start(4);
     unsigned int NumberOfWorkItems{3};
     Work work{[&] {
         incrementCountAndNotify();
@@ -100,7 +100,7 @@ TEST_F(ThreadPoolTest, ExecutesMultipleWork) {
 }
 
 TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
-    pool.start();
+    pool.start(4);
     unsigned int NumberOfWorkItems{10};
     unsigned int NumberOfThreads{10};
     Work work{[&] {
@@ -119,8 +119,8 @@ TEST_F(ThreadPoolTest, DispatchMultipleClientThreads) {
 }
 
 TEST_F(ThreadPoolTest, MakesSureAllThreadsWorkToRetrieveFromQueue) {
-    unsigned int NumberOfThreads=std::thread::hardware_concurrency();
-    pool.start();
+    unsigned int NumberOfThreads=4;
+    pool.start(NumberOfThreads);
     std::set<std::thread::id> threadIds;
     Work work{[&] {
         threadIds.insert(std::this_thread::get_id()); 

@@ -1,8 +1,6 @@
 #include "ThreadPool.h"
 
-void ThreadPool::start() {
-    unsigned int numberOfThreads= std::thread::hardware_concurrency();
-    
+void ThreadPool::start(unsigned int numberOfThreads) {
     for(unsigned int i{0}; i < numberOfThreads; i++) {
         threads.push_back(std::make_shared<std::thread>(&ThreadPool::worker, this));
     } 
