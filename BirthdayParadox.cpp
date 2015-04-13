@@ -5,6 +5,10 @@ BirthdayParadox::BirthdayParadox(int samples=1000, std::vector<int> sizes={}) {
     this->sizes = sizes;
 }
 
+void BirthdayParadox::useThreadPool(std::shared_ptr<ThreadPool> pool) {
+    this->pool = pool;
+}
+ 
 bool BirthdayParadox::hasDuplicates(std::vector<int> & birthdays) {
     std::sort(birthdays.begin(), birthdays.end());
     unsigned int size = birthdays.size();
@@ -38,7 +42,7 @@ void BirthdayParadox::simulate(BaseListener & listener) {
 
             listener.update(*it, dup); 
         }};
-        //pool.add(work);
-        work.execute();
+
+        pool->add(work);
     } 
 }

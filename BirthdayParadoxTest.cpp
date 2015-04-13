@@ -38,14 +38,19 @@ TEST(BirthdayParadoxTest, AreTheNumbersReallyRandom) {
 }
 
 TEST(BirthdayParadoxTest, Simulate) {
+
+    class SingleThreadedPool : public ThreadPool {
+        public:
+            virtual void add(Work work) {
+                work.execute();
+            }
+    };
+    std::shared_ptr<ThreadPool> pool;
+    pool= std::make_shared<SingleThreadedPool>(); 
     BirthdayParadox birthday(10,{10,23,30,40,50});
+    birthday.useThreadPool(pool);
     BirthdayParadoxListener listener;
     birthday.simulate(listener);
-    for(int i=0; i< 100000;i++) {
-    for(int j=0; j< 10000;j++) {} 
-
-
-    }
         
     ASSERT_THAT(listener.getSize(),Eq(5));
 }

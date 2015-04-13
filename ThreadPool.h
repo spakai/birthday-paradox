@@ -28,7 +28,7 @@ class ThreadPool {
         ~ThreadPool();
         void start(unsigned int numberOfThreads);
         void worker();
-        void add(Work work);
+        virtual void add(Work work);
         bool hasWork();
         Work pull();
 };
