@@ -52,7 +52,7 @@ TEST(BirthdayParadoxTest, SimulateWithSingleThreadedPool) {
     std::shared_ptr<ThreadPool> pool;
     pool = std::make_shared<SingleThreadedPool>(); 
     pool->start(0);
-    BirthdayParadox birthday(10,{10,23,30,40,50});
+    BirthdayParadox birthday(100000,{10,23,30,40,50});
     birthday.useThreadPool(pool);
     BirthdayParadoxListener listener;
     birthday.simulate(listener);
@@ -67,7 +67,6 @@ TEST(BirthdayParadoxTest, Listener) {
             void update(int id, int duplicates) override {
                 std::unique_lock<std::mutex> lock(m);
                 count++;
-                std::cout << count << std::endl;
                 wasExecuted.notify_all(); 
             }
 
