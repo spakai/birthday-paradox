@@ -33,14 +33,15 @@ std::vector<int> BirthdayParadox::generateNumbers(int size) {
 
 void BirthdayParadox::simulate(BaseListener & listener) {
     for(auto it=sizes.begin(); it!=sizes.end(); ++it) {
+        auto id = *it;
         Work work {[&] {
             int dup{0};
             for(int i{0}; i < samples ; i++) {
-                auto list = generateNumbers(*it);
+                auto list = generateNumbers(id);
                 if(hasDuplicates(list)) ++dup; 
             }
 
-            listener.update(*it, dup); 
+            listener.update(id, dup); 
         }};
 
         pool->add(work);
