@@ -12,3 +12,11 @@ std::vector<int> GnuPlotter::getX() {
 std::vector<int> GnuPlotter::getY() {
     return py;
 }
+
+void GnuPlotter::writeToCsv() {
+    std::ofstream outputFile("output.csv"); 
+    unsigned int size = px.size();
+    for(unsigned int i=0 ; i < size ; i++) {
+        outputFile << px.at(i) << "," << py.at(i) << std::endl; 
+    }
+}

@@ -12,7 +12,6 @@ class GnuPlotterTest : public Test {
 TEST_F(GnuPlotterTest, DataIsPushedtoX) {
     gnuplotter.add(1,2);
     gnuplotter.add(2,4);
-
     ASSERT_THAT(gnuplotter.getX(),ElementsAre(1,2));
 }
 
