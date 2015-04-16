@@ -52,7 +52,7 @@ TEST(BirthdayParadoxTest, SimulateWithSingleThreadedPool) {
     std::shared_ptr<ThreadPool> pool;
     pool = std::make_shared<SingleThreadedPool>(); 
     pool->start(0);
-    BirthdayParadox birthday(100000,{10,23,30,40,50});
+    BirthdayParadox birthday(1000,{10,23,30,40,50});
     birthday.useThreadPool(pool);
     BirthdayParadoxListener listener;
     birthday.simulate(listener);
@@ -84,7 +84,7 @@ TEST(BirthdayParadoxTest, Listener) {
     std::shared_ptr<ThreadPool> pool;
     std::shared_ptr<std::thread> t;
     pool = std::make_shared<ThreadPool>(); 
-    BirthdayParadox birthday(100000,{10,23,30,40,50});
+    BirthdayParadox birthday(1000,{10,23,30,40,50});
     birthday.useThreadPool(pool);
     pool->start(4);
  
@@ -96,4 +96,3 @@ TEST(BirthdayParadoxTest, Listener) {
     countingListener.waitForNotificationOrFailOnTimeout(5);
  
 }
-
