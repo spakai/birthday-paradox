@@ -11,12 +11,14 @@ set(sources
    main.cpp
    BirthdayParadox.cpp
    Work.cpp 
-   ThreadPool.cpp)
+   ThreadPool.cpp
+   GnuPlotter.cpp)
 
 set(test_sources
    BirthdayParadoxTest.cpp
    WorkTest.cpp
-   ThreadPoolTest.cpp)
+   ThreadPoolTest.cpp
+   GnuPlotterTest.cpp)
 
 add_executable(test ${test_sources} ${sources})
 
