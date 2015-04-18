@@ -12,7 +12,10 @@ class GnuPlotterTest : public Test {
 TEST_F(GnuPlotterTest, DataIsPushedtoX) {
     gnuplotter.add(1,2);
     gnuplotter.add(2,4);
-    ASSERT_THAT(gnuplotter.getX(),ElementsAre(1,2));
+    gnuplotter.add(3,8);
+    gnuplotter.add(4,16);
+    gnuplotter.add(5,32);
+    ASSERT_THAT(gnuplotter.getX(),ElementsAre(1,2,3,4,5));
 }
 
 TEST_F(GnuPlotterTest, DataIsPushedtoY) {
@@ -20,4 +23,23 @@ TEST_F(GnuPlotterTest, DataIsPushedtoY) {
     gnuplotter.add(2,4);
 
     ASSERT_THAT(gnuplotter.getY(),ElementsAre(2,4));
+}
+
+TEST_F(GnuPlotterTest, WriteInputCSV) {
+    gnuplotter.add(1,2);
+    gnuplotter.add(2,4);
+    gnuplotter.add(3,8);
+    gnuplotter.add(4,16);
+    gnuplotter.add(5,32);
+    gnuplotter.writeToCsv();
+}
+
+TEST_F(GnuPlotterTest, WritePlotCommands) {
+    gnuplotter.add(1,2);
+    gnuplotter.add(2,4);
+    gnuplotter.add(3,8);
+    gnuplotter.add(4,16);
+    gnuplotter.add(5,32);
+    gnuplotter.writeToCsv();
+    gnuplotter.writePlotCommands();
 }

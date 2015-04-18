@@ -20,3 +20,10 @@ void GnuPlotter::writeToCsv() {
         outputFile << px.at(i) << "," << py.at(i) << std::endl; 
     }
 }
+
+void GnuPlotter::writePlotCommands() {
+    std::ofstream outputFile("plot.gp");
+    outputFile << "set datafile separator \",\"" << std::endl;
+    outputFile << "plot \"output.csv\" using 1:2 with lines" << std::endl;
+    
+}
