@@ -27,3 +27,8 @@ void GnuPlotter::writePlotCommands() {
     outputFile << "plot \"output.csv\" using 1:2 with lines" << std::endl;
     
 }
+
+GnuPlotter::~GnuPlotter() {
+    writeToCsv();
+    writePlotCommands();
+}

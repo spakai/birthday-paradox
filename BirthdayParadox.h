@@ -6,6 +6,7 @@
 #include <map>
 #include "Work.h"
 #include "ThreadPool.h"
+#include "GnuPlotter.h"
 
 class BaseListener {
     public:
@@ -15,14 +16,11 @@ class BaseListener {
 class BirthdayParadoxListener : public BaseListener {
     public:
         virtual void update(int id, int duplicates) {
-            results.emplace(id,duplicates);            
+            gnuplotter.add(id, duplicates); 
         }
 
-        int getSize() const {
-            return results.size();
-        }
     private:
-        std::map<int, int> results;
+        GnuPlotter gnuplotter;
 };
 
 class BirthdayParadox {

@@ -4,6 +4,7 @@
 class GnuPlotter {
 
     public:
+        ~GnuPlotter();
         void add(int x, int y);
         std::vector<int> getX();
         std::vector<int> getY();

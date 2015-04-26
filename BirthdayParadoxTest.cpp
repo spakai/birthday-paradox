@@ -49,12 +49,25 @@ TEST(BirthdayParadoxTest, SimulateWithSingleThreadedPool) {
             }
     };
 
+    class TestListener : public BaseListener {
+        public:
+            virtual void update(int id, int duplicates) {
+                results.emplace(id,duplicates);            
+            }
+
+            int getSize() const {
+                return results.size();
+            }
+        private:
+            std::map<int, int> results;
+    }; 
+
     std::shared_ptr<ThreadPool> pool;
     pool = std::make_shared<SingleThreadedPool>(); 
     pool->start(0);
     BirthdayParadox birthday(1000,{10,23,30,40,50});
     birthday.useThreadPool(pool);
-    BirthdayParadoxListener listener;
+    TestListener listener;
     birthday.simulate(listener);
         
     ASSERT_THAT(listener.getSize(),Eq(5));
