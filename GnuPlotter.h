@@ -1,5 +1,6 @@
 #include <vector>
 #include <fstream>
+#include <mutex>
 
 class GnuPlotter {
 
@@ -13,4 +14,5 @@ class GnuPlotter {
     private:
         std::vector<int> px;
         std::vector<int> py;
+        std::mutex m;
 };

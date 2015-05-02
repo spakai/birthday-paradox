@@ -1,6 +1,7 @@
 #include "GnuPlotter.h"
 
 void GnuPlotter::add(int x, int y) {
+    std::lock_guard<std::mutex> lock(m);
     px.push_back(x);
     py.push_back(y);
 }
