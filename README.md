@@ -13,8 +13,9 @@ While studying Think Python - an excellent book by Allen B. Downey , I came acro
 Tests were done with Google test.
 
 To run
-
+```c++
 mkdir build
 cmake ..
 make clean && make
 ./test
+```
