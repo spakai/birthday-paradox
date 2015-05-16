@@ -79,7 +79,7 @@ TEST(BirthdayParadoxTest, Listener) {
         public:
             void update(int id, int duplicates) override {
                 std::unique_lock<std::mutex> lock(m);
-                count++;
+                count=count+id;
                 wasExecuted.notify_all(); 
             }
 
@@ -87,6 +87,11 @@ TEST(BirthdayParadoxTest, Listener) {
                 std::unique_lock<std::mutex> lock(m);
                 ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(milliseconds), [&] { return count == expectedCount; }), Eq(true));      
             } 
+
+            std::initializer_list<int> getIdList() const {
+                std::initializer_list<int> initList{10,23,40};
+                return initList;
+            }
 
             std::condition_variable wasExecuted;
             unsigned int count{0};
@@ -97,15 +102,15 @@ TEST(BirthdayParadoxTest, Listener) {
     std::shared_ptr<ThreadPool> pool;
     std::shared_ptr<std::thread> t;
     pool = std::make_shared<ThreadPool>(); 
-    BirthdayParadox birthday(1000,{10,23,30,40,50});
+    BirthdayParadox birthday(100,countingListener.getIdList());
     birthday.useThreadPool(pool);
-    pool->start(4);
+    pool->start(2);
  
     t = std::make_shared<std::thread> (
         [&] { birthday.simulate(countingListener);} 
     );
 
     t->join();
-    countingListener.waitForNotificationOrFailOnTimeout(5);
+    countingListener.waitForNotificationOrFailOnTimeout(73);
  
 }

@@ -1,5 +1,5 @@
 #include "BirthdayParadox.h"
-
+#include <iostream>
 BirthdayParadox::BirthdayParadox(int samples=1000, std::vector<int> sizes={}) {
     this->samples = samples;
     this->sizes = sizes;
@@ -33,8 +33,8 @@ std::vector<int> BirthdayParadox::generateNumbers(int size) {
 
 void BirthdayParadox::simulate(BaseListener & listener) {
     for(auto it=sizes.begin(); it!=sizes.end(); ++it) {
-        auto id = *it;
-        Work work {[&] {
+        int id = *it;
+        Work work {[&, id] {
             int dup{0};
             for(int i{0}; i < samples ; i++) {
                 auto list = generateNumbers(id);
