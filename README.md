@@ -11,17 +11,25 @@ While studying Think Python - an excellent book by Allen B. Downey , I came acro
 ##Code
 There a four classes
 
-BirthdayParadox - Takes a set of population with their sample size , generates random numbers and checks how many duplicates are present in each sample. The code that does this is passed as a Work object and added to the ThreadPool queue. 
-ThreadPool - Has multiple threads pick up Work from queue and execute them
-Work       - A piece of code that is pushed into ThreadPool queue and uses a callback function to update the output.
-GnuPlotter - writes plot commands and csv input
+BirthdayParadox 
+-Takes a set of population with their sample size , generates random numbers and checks how many duplicates are present in each sample. 
+-The code that does this is passed as a Work object and added to the ThreadPool queue. 
+
+ThreadPool 
+-Has multiple threads pick up Work from queue and execute them
+
+Work
+-A piece of code that is pushed into ThreadPool queue and uses a callback function to update the output.
+
+GnuPlotter
+-writes plot commands and csv input
 
 
 ##Tests
 Tests were done with Google test.
 
 To run
-```c++
+```bash
 mkdir build
 cmake ..
 make clean && make
