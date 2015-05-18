@@ -13,7 +13,7 @@ There are four classes
 
 BirthdayParadox 
 - Takes a list of populations with a sample size , generates random birthdays and then checks how many duplicates are present in each sample.
-- For example for sample size = 10000 and population = 23  , for 10000 times , random 23 birthdays will be generated and checked for duplications. There should be 50% or 5000 duplicates, plus or minus. 
+- For example , sample size = 10000 and population = 23 means for 10000 times , 23 random birthdays will be generated and checked for duplications. There should be around 50% or 5000 duplicates, plus or minus. 
 
 - The code that does the latter is passed as a Work object and added to the ThreadPool queue as this takes the most time to execute .
 
@@ -35,14 +35,14 @@ ThreadPool
 - Has one of the multiple threads pick up Work from queue and execute it.
 
 Work
-- A class that takes a lambda function, is pushed into ThreadPool queue , gets executed and uses a callback function to update the output.
+- A class that takes a lambda function, is pushed into ThreadPool queue , gets executed and uses a callback function to update a GnuPlotter object.
 
 GnuPlotter
 - writes plot commands and csv input
 
 
 ##Tests
-Tests were done with Google test.
+Tests were done with Google test. Cmake and GTest will be required.
 
 To run
 ```bash
