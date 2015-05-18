@@ -13,6 +13,8 @@ There are four classes
 
 BirthdayParadox 
 - Takes a set of population with their sample size and  generates random birthdays and then checks how many duplicates are present in each sample.
+- For example for sample size = 10000 and population = 23  , for 10000 times , random 23 birthdays will be generated and checked for duplicated . There should be 50% or 5000 duplicates. 
+
 - The code that does the latter is passed as a Work object and added to the ThreadPool queue. 
 
 ```cpp
@@ -30,7 +32,7 @@ BirthdayParadox
 ```
 
 ThreadPool 
-- Has one of the multiple threads pick up Work from queue and executes them
+- Has one of the multiple threads pick up Work from queue and execute it.
 
 Work
 - A class that takes a lambda function, is pushed into ThreadPool queue , gets executed and uses a callback function to update the output.
