@@ -9,11 +9,25 @@ just 70 people, and 50% probability with 23 people.
 While studying Think Python - an excellent book by Allen B. Downey , I came across this problem in one of the exercises. I thought it will be a good reason to learn up gnuplot and threadpools.
 
 ##Code
-There a four classes
+There are four classes
 
 BirthdayParadox 
-- Takes a set of population with their sample size , generates random numbers and checks how many duplicates are present in each sample.
-- The code that does this is passed as a Work object and added to the ThreadPool queue. 
+- Takes a set of population with their sample size , generates random birthdays and checks how many duplicates are present in each sample.
+- The code that does the latter is passed as a Work object and added to the ThreadPool queue. 
+
+```cpp
+         Work work {[&, id] {                                                                                  
+            int dup{0};                                                                                       
+            for(int i{0}; i < samples ; i++) {                                                                
+                auto list = generateNumbers(id);                                                              
+                if(hasDuplicates(list)) ++dup;                                                                
+            }                                                                                                 
+                                                                                                              
+            listener.update(id, dup);                                                                         
+        }};                                                                                                   
+                                                                                                              
+        pool->add(work);       
+```
 
 ThreadPool 
 - Has multiple threads pick up Work from queue and execute them
@@ -31,6 +45,7 @@ Tests were done with Google test.
 To run
 ```bash
 mkdir build
+cd build
 cmake ..
 make clean && make
 ./test
