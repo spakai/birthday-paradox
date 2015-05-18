@@ -32,13 +32,13 @@ BirthdayParadox
 ```
 
 ThreadPool 
-- Has one of the multiple threads pick up Work from queue and execute it.
+- Has one of the multiple threads pick up a Work object from queue and execute it.
 
 Work
-- A class that takes a lambda function, is pushed into ThreadPool queue , gets executed and uses a callback function to update a GnuPlotter object.
+- A class that takes a lambda function, is pushed into ThreadPool queue and executed.
 
 GnuPlotter
-- writes plot commands and csv input
+- writes plot commands and csv input , this is called by each Work object via the `listener.update()` function.
 
 
 ##Tests
