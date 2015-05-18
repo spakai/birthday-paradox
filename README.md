@@ -12,10 +12,10 @@ While studying Think Python - an excellent book by Allen B. Downey , I came acro
 There are four classes
 
 BirthdayParadox 
-- Takes a set of population with their sample size and  generates random birthdays and then checks how many duplicates are present in each sample.
-- For example for sample size = 10000 and population = 23  , for 10000 times , random 23 birthdays will be generated and checked for duplicated . There should be 50% or 5000 duplicates. 
+- Takes a list of populations with a sample size , generates random birthdays and then checks how many duplicates are present in each sample.
+- For example for sample size = 10000 and population = 23  , for 10000 times , random 23 birthdays will be generated and checked for duplications. There should be 50% or 5000 duplicates, plus or minus. 
 
-- The code that does the latter is passed as a Work object and added to the ThreadPool queue. 
+- The code that does the latter is passed as a Work object and added to the ThreadPool queue as this takes the most time to execute .
 
 ```cpp
          Work work {[&, id] {                                                                                  
