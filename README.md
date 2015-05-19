@@ -15,7 +15,7 @@ BirthdayParadox
 - Takes a list of populations with a sample size , generates random birthdays and then checks how many duplicates are present in each sample.
 - For example , sample size = 10000 and population = 23 means for 10000 times , 23 random birthdays will be generated and checked for duplications. There should be around 50% or 5000 duplicates, plus or minus. 
 
-- The code that does the latter is passed as a Work object and added to the ThreadPool queue as this takes the most time to execute .
+- The code that generates random birthdays and checks for duplications takes the most time therefore is passed in a Work object and added to the ThreadPool queue.
 
 ```cpp
          Work work {[&, id] {                                                                                  
