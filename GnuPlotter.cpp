@@ -26,7 +26,7 @@ void GnuPlotter::writePlotCommands() {
     std::ofstream outputFile("plot.gp");
     outputFile << "set datafile separator \",\"" << std::endl;
     outputFile << "plot \"output.csv\" using 1:2 with lines" << std::endl;
-    
+    outputFile << "pause -1 \"Hit any key to continue\"" << std::endl;
 }
 
 GnuPlotter::~GnuPlotter() {
