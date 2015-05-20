@@ -10,13 +10,13 @@
 
 class BaseListener {
     public:
-        virtual void update(int id, int duplicates)=0;
+        virtual void update(int popSize, int duplicates)=0;
 };
 
 class BirthdayParadoxListener : public BaseListener {
     public:
-        virtual void update(int id, int duplicates) {
-            gnuplotter.add(id, duplicates); 
+        virtual void update(int popSize, int duplicates) {
+            gnuplotter.add(popSize, duplicates); 
         }
 
     private:
@@ -25,13 +25,13 @@ class BirthdayParadoxListener : public BaseListener {
 
 class BirthdayParadox {
     public:
-        BirthdayParadox(int samples, std::vector<int> sizes);
+        BirthdayParadox(int samples, std::vector<int> popList);
         bool hasDuplicates(std::vector<int> & birthdays);
-        std::vector<int> generateNumbers(int size);
+        std::vector<int> generateNumbers(int popSize);
         void simulate(BaseListener & listener);
         void useThreadPool(std::shared_ptr<ThreadPool> pool);
     private:
         int samples;
-        std::vector<int> sizes;
+        std::vector<int> popList;
         std::shared_ptr<ThreadPool> pool;
 };
