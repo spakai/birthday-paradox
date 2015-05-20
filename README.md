@@ -13,7 +13,7 @@ There are four classes
 
 BirthdayParadox 
 - Takes a list of populations with a sample size , generates random birthdays and then checks how many duplicates are present in each sample.
-- For example , sample size = 10000 and population = 23 means for 10000 times , 23 random birthdays will be generated and checked for duplications. There should be around 50% or 5000 duplicates, plus or minus. 
+- For example , sample size = 10000 and population = 23,50 means for 10000 times , 23 random birthdays will be generated and checked for duplications. There should be around 50% or 5000 duplicates, plus or minus. 
 
 - The code that generates random birthdays and checks for duplications takes the most time therefore is passed in a Work object and added to the ThreadPool queue.
 
@@ -40,9 +40,13 @@ Work
 GnuPlotter
 - writes plot commands and csv input , this is called by each Work object via the `listener.update()` function.
 
+##Required software
+- Gnuplot
+- CMake
+- GTest
 
 ##Tests
-Tests were done with Google test. Cmake and GTest will be required.
+Tests were done with Google test.
 
 To run
 ```bash
@@ -52,3 +56,6 @@ cmake ..
 make clean && make
 ./test
 ```
+
+##Results
+to plot the graph run `gnuplot plot.gp`
