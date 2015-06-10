@@ -59,3 +59,8 @@ make clean && make
 
 ##Results
 to plot the graph run `gnuplot plot.gp`
+
+##Things to do
+- Moving from threadpool to a higher thread task concept introduced in C++ 11
+- A faster duplicate check
+- Real time graph
