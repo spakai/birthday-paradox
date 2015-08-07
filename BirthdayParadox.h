@@ -4,6 +4,7 @@
 #include <random>
 #include <vector>
 #include <map>
+#include <set>
 #include "Work.h"
 #include "ThreadPool.h"
 #include "GnuPlotter.h"

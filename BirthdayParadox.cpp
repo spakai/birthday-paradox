@@ -10,14 +10,8 @@ void BirthdayParadox::useThreadPool(std::shared_ptr<ThreadPool> pool) {
 }
  
 bool BirthdayParadox::hasDuplicates(std::vector<int> & birthdays) {
-    std::sort(birthdays.begin(), birthdays.end());
-    unsigned int size = birthdays.size();
-    for(unsigned int i{1}; i < size; i++) {
-        if(birthdays.at(i) == birthdays.at(i-1)) 
-            return true;
-    }
-
-    return false;
+    std::set<int> uniqueBirthdays(birthdays.begin(), birthdays.end());
+    return (uniqueBirthdays.size() != birthdays.size());
 }
 
 std::vector<int> BirthdayParadox::generateNumbers(int popSize) {
