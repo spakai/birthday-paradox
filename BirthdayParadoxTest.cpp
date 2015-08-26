@@ -1,46 +1,44 @@
 #include "gmock/gmock.h" 
-
 #include "BirthdayParadox.h"
-#include <iostream>
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
 
 using namespace testing;
 
-TEST(BirthdayParadoxTest, HasDuplicates) {
-    BirthdayParadox birthday(0,{23});
+class BirthdayParadoxTest : public Test {
+    public:
+        BirthdayParadox birthday;
+};
+
+TEST_F(BirthdayParadoxTest, HasDuplicates) {
     std::vector<int> list_of_numbers {32,21,32,2,4};
-    ASSERT_THAT(birthday.hasDuplicates(list_of_numbers),Eq(1));
+    ASSERT_THAT(birthday.hasDuplicates(list_of_numbers),Eq(true));
 }
 
-TEST(BirthdayParadoxTest, HasNoDuplicates) {
-    BirthdayParadox birthday(0,{23});
+TEST_F(BirthdayParadoxTest, HasNoDuplicates) {
     std::vector<int> list_of_numbers {17,21,3,32,4};
-    ASSERT_THAT(birthday.hasDuplicates(list_of_numbers),Eq(0));
+    ASSERT_THAT(birthday.hasDuplicates(list_of_numbers),Eq(false));
 }
 
-TEST(BirthdayParadoxTest, CorrectNoOfNumbersGenerated) {
-    BirthdayParadox birthday(0,{23});
+TEST_F(BirthdayParadoxTest, CorrectNoOfNumbersGenerated) {
     auto list = birthday.generateNumbers(20);
     ASSERT_THAT(list.size(), Eq(20));
 }
 
-TEST(BirthdayParadoxTest, MaxNoDoesNotExceed365) {
-    BirthdayParadox birthday(0,{23});
+TEST_F(BirthdayParadoxTest, MaxNoDoesNotExceed365) {
     auto list = birthday.generateNumbers(20);
     auto it = std::max_element(list.begin(), list.end());
     ASSERT_THAT(*it, Lt(366)); 
 }
 
-TEST(BirthdayParadoxTest, AreTheNumbersReallyRandom) {
-    BirthdayParadox birthday(0,{23});
+TEST_F(BirthdayParadoxTest, AreTheNumbersReallyRandom) {
     auto list1 = birthday.generateNumbers(20);
     auto list2 = birthday.generateNumbers(20);
     ASSERT_THAT(list1 == list2, Eq(0));
 }
 
-TEST(BirthdayParadoxTest, SimulateWithSingleThreadedPool) {
+TEST_F(BirthdayParadoxTest, SimulateWithSingleThreadedPool) {
 
     class SingleThreadedPool : public ThreadPool {
         public:
@@ -65,15 +63,14 @@ TEST(BirthdayParadoxTest, SimulateWithSingleThreadedPool) {
     std::shared_ptr<ThreadPool> pool;
     pool = std::make_shared<SingleThreadedPool>(); 
     pool->start(0);
-    BirthdayParadox birthday(1000,{10,23,30,40,50});
     birthday.useThreadPool(pool);
     TestListener listener;
-    birthday.simulate(listener);
+    birthday.simulate(1000, {10,23,30,40,50},listener);
         
     ASSERT_THAT(listener.getSize(),Eq(5));
 }
 
-TEST(BirthdayParadoxTest, Listener) {
+TEST_F(BirthdayParadoxTest, Listener) {
 
     class CountingListener : public BaseListener {
         public:
@@ -102,12 +99,11 @@ TEST(BirthdayParadoxTest, Listener) {
     std::shared_ptr<ThreadPool> pool;
     std::shared_ptr<std::thread> t;
     pool = std::make_shared<ThreadPool>(); 
-    BirthdayParadox birthday(100,countingListener.getIdList());
     birthday.useThreadPool(pool);
     pool->start(2);
  
     t = std::make_shared<std::thread> (
-        [&] { birthday.simulate(countingListener);} 
+        [&] { birthday.simulate(100, countingListener.getIdList(), countingListener);} 
     );
 
     t->join();

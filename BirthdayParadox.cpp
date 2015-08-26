@@ -1,9 +1,4 @@
 #include "BirthdayParadox.h"
-#include <iostream>
-BirthdayParadox::BirthdayParadox(int samples=1000, std::vector<int> popList={}) {
-    this->samples = samples;
-    this->popList = popList;
-}
 
 void BirthdayParadox::useThreadPool(std::shared_ptr<ThreadPool> pool) {
     this->pool = pool;
@@ -25,7 +20,7 @@ std::vector<int> BirthdayParadox::generateNumbers(int popSize) {
     return list;
 }
 
-void BirthdayParadox::simulate(BaseListener & listener) {
+void BirthdayParadox::simulate(int samples, std::vector<int> popList, BaseListener & listener) {
     for(auto it=popList.begin(); it!=popList.end(); ++it) {
         int id = *it;
         Work work {[&, id] {

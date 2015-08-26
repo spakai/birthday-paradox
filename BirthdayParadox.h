@@ -26,10 +26,9 @@ class BirthdayParadoxListener : public BaseListener {
 
 class BirthdayParadox {
     public:
-        BirthdayParadox(int samples, std::vector<int> popList);
         bool hasDuplicates(std::vector<int> & birthdays);
         std::vector<int> generateNumbers(int popSize);
-        void simulate(BaseListener & listener);
+        void simulate(int samples, std::vector<int> popList, BaseListener & listener);
         void useThreadPool(std::shared_ptr<ThreadPool> pool);
     private:
         int samples;
