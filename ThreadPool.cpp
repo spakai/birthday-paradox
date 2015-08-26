@@ -8,25 +8,31 @@ void ThreadPool::start(unsigned int numberOfThreads) {
 
 void ThreadPool::worker() {
     while (!done) {
-        while (!done && !hasWork())
-            ;
+        Work work;
+        {
+            std::unique_lock<std::mutex> ul(m);
+            cv.wait(ul,[&] { return ( hasWork() || done );});
+            work = pull();
+        }
+
         if(done) break;
-        pull().execute(); 
+        work.execute(); 
     }
 }
 
 void ThreadPool::add(Work work) {
-    std::lock_guard<std::mutex> guard(m); 
-    workQueue.push_front(work);
+    {
+        std::lock_guard<std::mutex> guard(m); 
+        workQueue.push_front(work);
+    }
+    cv.notify_one();
 }
 
 bool ThreadPool::hasWork() {
-    std::lock_guard<std::mutex> guard(m); 
     return !workQueue.empty();
 }
 
 Work ThreadPool::pull() {
-    std::lock_guard<std::mutex> guard(m); 
     if(workQueue.empty()) return Work{};
     auto work = workQueue.back();
     workQueue.pop_back();
@@ -35,6 +41,7 @@ Work ThreadPool::pull() {
 
 ThreadPool::~ThreadPool() {
     done = true; 
+    cv.notify_all();
     for(auto& t:threads) {
         t->join();
     }

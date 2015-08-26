@@ -1,12 +1,3 @@
-/***                                                                                                          
- * Excerpted from "Modern C++ Programming with Test-Driven Development",                                      
- * published by The Pragmatic Bookshelf.                                                                      
- * Copyrights apply to this code. It may not be used to create training material,                             
- * courses, books, articles, and the like. Contact us if you are in doubt.                                    
- * We make no guarantees that this code is fit for any purpose.                                               
- * Visit http://www.pragmaticprogrammer.com/titles/lotdd for more book information.                           
-***/                 
-
 #pragma once
 
 #include <deque>
@@ -14,6 +5,7 @@
 #include <memory>
 #include <atomic>
 #include <mutex>
+#include <condition_variable>
 #include <vector>
 
 #include "Work.h"
@@ -23,6 +15,7 @@ class ThreadPool {
         std::deque<Work> workQueue;
         std::atomic<bool> done {false};    
         std::mutex m;
+        std::condition_variable cv;
         std::vector<std::shared_ptr<std::thread>> threads;
     public:
         ~ThreadPool();
