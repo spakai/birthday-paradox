@@ -9,6 +9,7 @@ set(CMAKE_CXX_FLAGS "${CMAXE_CXX_FLAGS} -Wall -g -O0 --coverage")
 
 set(sources 
    main.cpp
+   Listener.h
    BirthdayParadox.cpp
    Work.cpp 
    ThreadPool.cpp
