@@ -9,7 +9,7 @@ just 70 people, and 50% probability with 23 people - Wikipedia
 While studying Think Python - an excellent book by Allen B. Downey , I came across this problem in one of the exercises. I thought it will be a good reason to learn up gnuplot and threadpools.
 
 ##Code
-There are four classes
+There are five classes
 
 BirthdayParadox 
 - Takes a list of populations with a sample size , generates random birthdays and then checks how many duplicates are present in each sample.
@@ -18,7 +18,7 @@ BirthdayParadox
 - The code that generates random birthdays and checks for duplications takes the most time therefore is passed in a Work object and added to the ThreadPool queue.
 
 ```cpp
-         Work work {[&, id] {                                                                                  
+         Work work {[&, id, samples] {                                                                                  
             int dup{0};                                                                                       
             for(int i{0}; i < samples ; i++) {                                                                
                 auto list = generateNumbers(id);                                                              
@@ -32,10 +32,13 @@ BirthdayParadox
 ```
 
 ThreadPool 
-- Has one of the multiple threads pick up a Work object from queue and execute it.
+- Has one of the multiple threads pick up a Work object from queue and execute it.The first version used polling ,I've refactored it to use notify-wait mechanism to save on CPU cycles.
 
 Work
 - A class that takes a lambda function, is pushed into ThreadPool queue and executed.
+
+Listener
+- A class that contains the callback interface and implementation.
 
 GnuPlotter
 - writes plot commands and csv input , this is called by each Work object via the `listener.update()` function.
@@ -62,5 +65,4 @@ to plot the graph run `gnuplot plot.gp`
 
 ##Things to do
 - Moving from threadpool to a higher thread task concept introduced in C++ 11
-- A faster duplicate check
 - Real time graph
