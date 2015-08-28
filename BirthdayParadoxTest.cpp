@@ -76,17 +76,17 @@ TEST_F(BirthdayParadoxTest, Listener) {
         public:
             void update(int id, int duplicates) override {
                 std::unique_lock<std::mutex> lock(m);
-                count=count+id;
+                count=count+duplicates;
                 wasExecuted.notify_all(); 
             }
 
-            void waitForNotificationOrFailOnTimeout(unsigned expectedCount, int milliseconds=10000) {
+            void waitForNotificationOrFailOnTimeout(unsigned expectedCount, int milliseconds=20000) {
                 std::unique_lock<std::mutex> lock(m);
                 ASSERT_THAT(wasExecuted.wait_for(lock, std::chrono::milliseconds(milliseconds), [&] { return count == expectedCount; }), Eq(true));      
             } 
 
             std::initializer_list<int> getIdList() const {
-                std::initializer_list<int> initList{10,23,40};
+                std::initializer_list<int> initList{365,400,450,500,550,650,700};
                 return initList;
             }
 
@@ -100,13 +100,13 @@ TEST_F(BirthdayParadoxTest, Listener) {
     std::shared_ptr<std::thread> t;
     pool = std::make_shared<ThreadPool>(); 
     birthday.useThreadPool(pool);
-    pool->start(2);
+    pool->start(4);
  
     t = std::make_shared<std::thread> (
-        [&] { birthday.simulate(100, countingListener.getIdList(), countingListener);} 
+        [&] { birthday.simulate(1000, countingListener.getIdList(), countingListener);} 
     );
 
     t->join();
-    countingListener.waitForNotificationOrFailOnTimeout(73);
+    countingListener.waitForNotificationOrFailOnTimeout(7000);
  
 }

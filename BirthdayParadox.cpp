@@ -1,4 +1,5 @@
 #include "BirthdayParadox.h"
+#include <iostream>
 
 void BirthdayParadox::useThreadPool(std::shared_ptr<ThreadPool> pool) {
     this->pool = pool;
@@ -20,16 +21,16 @@ std::vector<int> BirthdayParadox::generateNumbers(int popSize) {
     return list;
 }
 
-void BirthdayParadox::simulate(int samples, std::vector<int> popList, BaseListener & listener) {
+void BirthdayParadox::simulate(const int samples, std::vector<int> popList, BaseListener & listener) {
     for(auto it=popList.begin(); it!=popList.end(); ++it) {
         int id = *it;
-        Work work {[&, id] {
+        Work work {[&, id,samples,popList] {
+ 
             int dup{0};
             for(int i{0}; i < samples ; i++) {
                 auto list = generateNumbers(id);
                 if(hasDuplicates(list)) ++dup; 
             }
-
             listener.update(id, dup); 
         }};
 
