@@ -35,7 +35,7 @@ TEST_F(GnuPlotterTest, WriteInputCSV) {
     gnuplotter.add(3,8);
     gnuplotter.add(4,16);
     gnuplotter.add(5,32);
-    gnuplotter.writeToCsv();
+    gnuplotter.writeToCsv("output.csv");
 }
 
 TEST_F(GnuPlotterTest, WritePlotCommands) {
@@ -44,6 +44,6 @@ TEST_F(GnuPlotterTest, WritePlotCommands) {
     gnuplotter.add(3,8);
     gnuplotter.add(4,16);
     gnuplotter.add(5,32);
-    gnuplotter.writeToCsv();
-    gnuplotter.writePlotCommands();
+    gnuplotter.writeToCsv("output.csv");
+    gnuplotter.writePlotCommands("plot.gp");
 }

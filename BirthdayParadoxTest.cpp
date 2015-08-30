@@ -108,5 +108,4 @@ TEST_F(BirthdayParadoxTest, Listener) {
 
     t->join();
     countingListener.waitForNotificationOrFailOnTimeout(7000);
- 
 }

@@ -11,9 +11,9 @@
 
 class BirthdayParadox {
     public:
-        bool hasDuplicates(std::vector<int> & birthdays);
-        std::vector<int> generateNumbers(int popSize);
-        void simulate(int samples, std::vector<int> popList, BaseListener & listener);
+        bool hasDuplicates(const std::vector<int> & birthdays);
+        std::vector<int> generateNumbers(const int popSize);
+        void simulate(const int samples, const std::vector<int> & popList, BaseListener & listener);
         void useThreadPool(std::shared_ptr<ThreadPool> pool);
     private:
         std::shared_ptr<ThreadPool> pool;

@@ -10,8 +10,8 @@ class GnuPlotter {
         std::vector<int> getX();
         std::vector<int> getY();
         void setHeaders(const std::string & xHeader, const std::string & yHeader);
-        void writeToCsv();
-        void writePlotCommands();
+        void writeToCsv(const std::string & filename);
+        void writePlotCommands(const std::string & filename);
     private:
         std::vector<int> px;
         std::vector<int> py;
