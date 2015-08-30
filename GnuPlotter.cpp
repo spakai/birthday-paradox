@@ -13,8 +13,14 @@ std::vector<int> GnuPlotter::getY() {
     return py;
 }
 
+void GnuPlotter::setHeaders(const std::string & xHeader, const std::string & yHeader) {
+    this->xHeader = xHeader;
+    this->yHeader = yHeader;
+}
+
 void GnuPlotter::writeToCsv() {
-    std::ofstream outputFile("output.csv"); 
+    std::ofstream outputFile("output.csv");
+    outputFile << xHeader << "," << yHeader << std::endl; 
     unsigned int size = px.size();
     for(unsigned int i=0 ; i < size ; i++) {
         outputFile << px.at(i) << "," << py.at(i) << std::endl; 

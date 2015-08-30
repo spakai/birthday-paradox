@@ -24,9 +24,8 @@ std::vector<int> BirthdayParadox::generateNumbers(int popSize) {
 void BirthdayParadox::simulate(const int samples, std::vector<int> popList, BaseListener & listener) {
     for(auto it=popList.begin(); it!=popList.end(); ++it) {
         int id = *it;
-        Work work {[&, id,samples,popList] {
- 
-            int dup{0};
+        Work work {[&, id,samples] {
+             int dup{0};
             for(int i{0}; i < samples ; i++) {
                 auto list = generateNumbers(id);
                 if(hasDuplicates(list)) ++dup; 

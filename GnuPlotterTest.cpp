@@ -7,6 +7,10 @@ using namespace testing;
 class GnuPlotterTest : public Test {
     public:
         GnuPlotter gnuplotter;
+
+        void SetUp() override {
+            gnuplotter.setHeaders("X Test", "Y Test");
+        }
 };
 
 TEST_F(GnuPlotterTest, DataIsPushedtoX) {

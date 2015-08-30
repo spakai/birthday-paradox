@@ -10,7 +10,7 @@ class BaseListener {
                                                                                                               
 class BirthdayParadoxListener : public BaseListener {                                                         
     public:                                                                                                   
-        void update(int popSize, int duplicates) override{                                                    
+        void update(int popSize, int duplicates) override {                                                    
             std::lock_guard<std::mutex> guard(m);                                                             
             gnuplotter.add(popSize, duplicates);                                                              
         }                                                                                                     
